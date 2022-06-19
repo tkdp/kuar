@@ -17,8 +17,49 @@ kubectl version
 kubectl get componentstatuses
 kubectl get nodes
 kubectl describe nodes kube1
-kubectl get daemonSets --namespace=kube-system kube-proxy
+kubectl get daemonSets  --namespace=kube-system kube-proxy
 kubectl get deployments --namespace=kube-system coredns
 
 kubectl get services --namespace=kube-system
 kubectl get services --namespace=kube-system kube-dns
+
+--namespace oder  -n: verhält sich wie ein verzeichnis
+--all-namespaces
+
+contexts
+-------
+kubectl config set-context my-context --namespace=mystuff
+kubectl config use-context my-context
+
+rest api
+------------
+kubectl get --namespace=kube-system pods azure-ip-masq-agent-psvbn -o jsonpath --template={.status.hostIP}
+
+-o wide
+-o json
+-o yaml
+-o jsonpath dann mit template
+
+kubectl get pods,services
+
+labels/annotations
+----------
+kubectl label pods bar color=red
+delete: kubectl label pods bar color-
+overwrite: kubectl label pods bar color=blue --overwrite
+
+
+debugging
+-----------
+kubectl logs --namespace=kube-system kube-proxy-96bxd
+-c für einen bestimmten container innerhalb des pods
+-f für "tail -f"
+
+kubectl exec -it --namespace=kube-system kube-proxy-96bxd -- bash
+kubectl attach -it <pod-name>
+
+kubectl port-forward <pod-name> 8080:80
+
+kubectl get events
+
+kubectl top nodes
