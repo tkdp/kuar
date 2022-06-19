@@ -1,0 +1,24 @@
+AZURE
+---------------------------------
+
+az group create --name=TKDP_TEST --location=germanywestcentral
+
+az aks create --resource-group=TKDP_TEST --name=kuar-cluster
+
+az aks get-credentials --resource-group=TKDP_TEST --name=kuar-cluster
+
+az aks install-cli
+
+
+KUBECTL
+--------------------------------
+
+kubectl version
+kubectl get componentstatuses
+kubectl get nodes
+kubectl describe nodes kube1
+kubectl get daemonSets --namespace=kube-system kube-proxy
+kubectl get deployments --namespace=kube-system coredns
+
+kubectl get services --namespace=kube-system
+kubectl get services --namespace=kube-system kube-dns
