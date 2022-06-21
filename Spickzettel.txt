@@ -63,3 +63,48 @@ kubectl port-forward <pod-name> 8080:80
 kubectl get events
 
 kubectl top nodes
+
+PODS
+-------
+
+kubectl run kuard --image=docker.io/tkdp/kuard   # --generator=run-pod/v1 ist deprecated
+
+kubectl apply -f ./kuard-pod.yaml
+kubectl delete -f kuard-pod.yaml
+kuabctl delete pods kuard --namespace=tkdp-kuard
+
+kubectl logs kuard --previous # previous macht dann Sinn wenn die container permanent neu starten
+
+kubectl create deployment alpaca-prod --image=gcr.io/kuar-demo/kuard-amd64:blue --replicas=3
+
+LABELS / ANNOTATIONS
+---------------------
+kubectl label deployments alpaca-test "canary=true" --overwrite
+kubectl get deployments -L canary
+kubectl get pods --selector="ver=2" --show-labels
+kubectl get pods --selector="ver=2,env=prod" --show-labels
+kubectl get pods --selector="app in (alpaca,bandicoot)" --show-labels
+kubectl get pods --selector="canary" --show-labels
+kubectl delete  pods --selector='!canary'
+kubectl delete replicasets --selector='ver=1'
+
+kubectl delete replicasets --all
+
+'key=value'
+key is set to value
+
+'key!=value'
+key is not set to value
+
+'key in (value1, value2)'
+key is one of value1 or value2
+
+'key notin (value1, value2)'
+key is not one of value1 or value2
+
+'key'
+key is set
+
+'!key'    # Achtung: ' ist hier wichtig!!!!
+key is not set
+
